@@ -1,4 +1,6 @@
 
+NOTE: this is a thin wrapper of https://github.com/ysminnpu/IDEAir. You can check more details over there before you grab the code. 
+
 # IDEAir
 
 IDEAir is an open source IDE based on [cloud9](https://github.com/ajaxorg/cloud9).
@@ -43,6 +45,24 @@ Start IDEAir server
 Use IDEAir
 
     Go to http://IDEAir_server:3105/#/dashboard with your favorite browser. 
+
+
+### Full IDEAir Installation on the board
+We use an embedded board such as Edison (32bit IA arch) as an example. And we suppose the board and the host share a same wlan network. The ip of board is 192.168.8.100. 
+
+On host, install a version of 32bit node.js. In our experiment, we used http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-x86.tar.gz. Untar the package and include the bin directory in your PATH. Use "which node" to make sure you are using the node binary from that directory. 
+
+Also make sure you are using 32bit CC, CXX from the Edison SDK. You can change them using "source /opt/poky-edison/1.5.1/environment-setup-i586-poky-linux". And verify your CC is from Edison SDK by "echo $CC".
+
+Then follow the installation instruction mentioned above, to install a 32 bit version server on your host. This step helps us resolve all the package dependencies. 
+
+Then create a tarball with tar cvzf IDEAir.tgz IDEAir. Copy it to the board with scp IDEAir.tgz root@192.168.8.100:/home. 
+
+ssh root@192.168.8.100; cd /home/; tar xzvf IDEAir.tgz; cd IDEAir/cloud9hub/. Change config.js to use a proper url for the board - our test uses 192.168.8.100. 
+
+Start server with npm start. 
+
+On the host, google-chrome 192.168.8.100/#/dashboard. 
 
 
 ### Only Install cloud9 (no project management feature)
